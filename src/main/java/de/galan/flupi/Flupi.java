@@ -1,7 +1,7 @@
 package de.galan.flupi;
 
 import de.galan.commons.time.HumanTime;
-import de.galan.flupi.FLuentHttpClient.HttpBuilder;
+import de.galan.flupi.FluentHttpClient.HttpBuilder;
 
 
 /**
@@ -25,12 +25,12 @@ public class Flupi {
 
 
 	public static HttpBuilder request(String resource) {
-		return defaults(new FLuentHttpClient().request(resource));
+		return defaults(new FluentHttpClient().request(resource));
 	}
 
 
 	public static HttpBuilder request(String protocol, String host, Integer port, String path) {
-		return defaults(new FLuentHttpClient().request(protocol, host, port, path));
+		return defaults(new FluentHttpClient().request(protocol, host, port, path));
 	}
 
 

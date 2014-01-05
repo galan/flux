@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.galan.commons.test.AbstractTestParent;
-import de.galan.flupi.FLuentHttpClient.HttpBuilder;
+import de.galan.flupi.FluentHttpClient.HttpBuilder;
 
 
 /**
@@ -23,13 +23,13 @@ import de.galan.flupi.FLuentHttpClient.HttpBuilder;
  */
 public class HttpDslParameterTest extends AbstractTestParent {
 
-	private FLuentHttpClient http;
+	private FluentHttpClient http;
 	private HttpBuilder builder;
 
 
 	@Before
 	public void before() {
-		http = new FLuentHttpClient();
+		http = new FluentHttpClient();
 		builder = http.request("http://www.example.com");
 		assertNull(builder.builderParameter);
 	}

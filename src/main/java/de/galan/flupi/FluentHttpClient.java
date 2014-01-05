@@ -19,17 +19,17 @@ import de.galan.flupi.proxy.CommonProxy;
  * 
  * @author daniel
  */
-public class FLuentHttpClient {
+public class FluentHttpClient {
 
 	private HttpClient client;
 
 
-	public FLuentHttpClient() {
+	public FluentHttpClient() {
 		// nada
 	}
 
 
-	public FLuentHttpClient(HttpClient client) {
+	public FluentHttpClient(HttpClient client) {
 		setClient(client);
 	}
 

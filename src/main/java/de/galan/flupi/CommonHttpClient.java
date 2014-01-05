@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.Callable;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -28,6 +29,7 @@ import org.slf4j.Logger;
 import de.galan.commons.logging.Logr;
 import de.galan.commons.net.UrlUtil;
 import de.galan.commons.time.Sleeper;
+import de.galan.commons.util.RetriableTask;
 
 
 /**
@@ -104,9 +106,9 @@ public class CommonHttpClient implements HttpClient {
 
 
 	@Override
-	public Response request(String resource, Method method, Map<String, String> extraHeader, Map<String, List<String>> parameters, byte[] body, HttpOptions options) throws HttpClientException {
-		HttpOptions opts = (options != null) ? options : new HttpOptions();
-		URL url = null;
+	public Response request(String resource, final Method method, final Map<String, String> extraHeader, Map<String, List<String>> parameters, final byte[] body, HttpOptions options) throws HttpClientException {
+		final HttpOptions opts = (options != null) ? options : new HttpOptions();
+		final URL url;
 		try {
 			url = new URL(appendParameters(resource, parameters));
 		}
@@ -114,23 +116,22 @@ public class CommonHttpClient implements HttpClient {
 			throw new HttpClientException("URL invalid", muex);
 		}
 
-		Response response = null;
-		for (int i = 0; i <= opts.getRetriesCount(); i++) {
-			try {
-				response = request(method, extraHeader, body, url, opts);
-				break;
-			}
-			catch (HttpClientException ex) {
-				if (i < opts.getRetriesCount()) {
-					LOG.info("Unable to connect to {resource}, retrying", resource);
-					Sleeper.sleep(opts.getTimeBetweenRetries());
+		try {
+			return new RetriableTask<>(new Callable<Response>() {
+
+				@Override
+				public Response call() throws Exception {
+					return request(method, extraHeader, body, url, opts);
 				}
-				else {
-					throw ex;
-				}
-			}
+
+			}).call();
 		}
-		return response;
+		catch (Exception ex) {
+			if (ex.getCause() != null && ex.getCause() instanceof HttpClientException) {
+				throw (HttpClientException)ex.getCause();
+			}
+			throw new HttpClientException("Failed requesting " + url + " after " + opts.getRetriesCount() + " retries", ex);
+		}
 	}
 
 
