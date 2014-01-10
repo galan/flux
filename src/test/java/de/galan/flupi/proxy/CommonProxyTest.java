@@ -25,6 +25,14 @@ public class CommonProxyTest extends AbstractTestParent {
 	}
 
 
+	@Test
+	public void testToString() throws Exception {
+		assertNull(new CommonProxy(null).toString());
+		assertEquals("1.2.3.4:222", new CommonProxy("1.2.3.4", 222).toString());
+		assertEquals("1.2.3.4:80", new CommonProxy("1.2.3.4").toString());
+	}
+
+
 	private void assertProxy(CommonProxy cp, String ip, int port, String username, String password, String toString) {
 		assertEquals(ip, cp.getIp());
 		assertEquals(port, cp.getPort());
