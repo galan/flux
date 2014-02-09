@@ -120,7 +120,7 @@ public class FluentHttpClient {
 
 
 		public HttpBuilder timeout(String timeout) {
-			return timeout(HumanTime.dehumanizeTime(timeout).intValue());
+			return timeout(HumanTime.dehumanizeTime(timeout));
 		}
 
 

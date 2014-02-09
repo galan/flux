@@ -1,5 +1,7 @@
 package de.galan.flupi.proxy;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 import org.apache.commons.lang3.StringUtils;
 
 
@@ -70,19 +72,24 @@ public class CommonProxy {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		if (StringUtils.isNotBlank(getUsername())) {
-			builder.append(getUsername());
-			if (StringUtils.isNotBlank(getPassword())) {
-				builder.append(":");
-				builder.append(getPassword());
+		String result = null;
+		if (!isBlank(getIp())) {
+			StringBuilder builder = new StringBuilder();
+			if (StringUtils.isNotBlank(getUsername())) {
+				builder.append(getUsername());
+				if (StringUtils.isNotBlank(getPassword())) {
+					builder.append(":");
+					builder.append(getPassword());
+				}
+				builder.append("@");
 			}
-			builder.append("@");
+			builder.append(getIp());
+			builder.append(":");
+			builder.append(getPort());
+
+			result = builder.toString();
 		}
-		builder.append(getIp());
-		builder.append(":");
-		builder.append(getPort());
-		return builder.toString();
+		return result;
 	}
 
 }
