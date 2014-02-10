@@ -15,7 +15,8 @@ import de.galan.flupi.proxy.CommonProxy;
 
 
 /**
- * Simplified fluent interface for HttpClient.
+ * Creating fluent http requests (simplified fluent interface for HttpClient). Can be used directly when using eg. DI
+ * such as Guice, or by using the static Factory class called Flupi.
  * 
  * @author daniel
  */

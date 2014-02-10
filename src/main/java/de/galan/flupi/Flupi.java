@@ -1,5 +1,10 @@
 package de.galan.flupi;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import de.galan.commons.time.HumanTime;
 import de.galan.flupi.FluentHttpClient.HttpBuilder;
 
@@ -12,6 +17,7 @@ import de.galan.flupi.FluentHttpClient.HttpBuilder;
 public class Flupi {
 
 	private static Long defaultTimeout;
+	private static Map<String, String> defaultHeader;
 
 
 	/**
@@ -31,6 +37,22 @@ public class Flupi {
 	 */
 	public static void setDefaultTimeout(String timeout) {
 		defaultTimeout = HumanTime.dehumanizeTime(timeout);
+	}
+
+
+	/**
+	 * Added default headers will always be send, can still be overriden using the builder.
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public static void addDefaultHeader(String key, String value) {
+		if (isNotBlank(key) && isNotBlank(value)) {
+			if (defaultHeader == null) {
+				defaultHeader = new HashMap<String, String>();
+			}
+			defaultHeader.put(key, value);
+		}
 	}
 
 
@@ -59,9 +81,13 @@ public class Flupi {
 	}
 
 
+	/** Setting the static defaults before returning the builder */
 	private static HttpBuilder defaults(HttpBuilder builder) {
 		if (defaultTimeout != null) {
 			builder.timeout(defaultTimeout);
+		}
+		if (defaultHeader != null) {
+			builder.headers(defaultHeader);
 		}
 		return builder;
 	}
