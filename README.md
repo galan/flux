@@ -65,9 +65,9 @@ Setting the timeout using the builder
 
 Setting the connection and read timeout independently
 
-    Flupi.setDefaultTimeoutConnection("1m");
+    Flupi.setDefaultTimeoutConnection("5s");
     Flupi.setDefaultTimeoutRead("1m");
-    Flupi.request("http://host/resource").timeoutConnection("1m").get();
+    Flupi.request("http://host/resource").timeoutConnection("5s").get();
     Flupi.request("http://host/resource").timeoutRead("1m").get();
 
 ## Response
