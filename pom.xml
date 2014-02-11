@@ -3,7 +3,7 @@
 
 	<groupId>de.galan</groupId>
 	<artifactId>flupi</artifactId>
-	<version>.1</version>
+	<version>0.1</version>
 	<name>Flupi</name>
 	<description>Fluent http/rest-client interface</description>
 
