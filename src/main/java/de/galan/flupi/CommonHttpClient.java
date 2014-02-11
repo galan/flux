@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 
 import de.galan.commons.logging.Logr;
 import de.galan.commons.net.UrlUtil;
+import de.galan.commons.time.HumanTime;
 import de.galan.commons.time.Sleeper;
 import de.galan.commons.util.RetriableTask;
 
@@ -117,7 +118,8 @@ public class CommonHttpClient implements HttpClient {
 		}
 
 		try {
-			return new RetriableTask<>(new Callable<Response>() {
+			String timeBetween = (opts.getTimeBetweenRetries() == null) ? null : HumanTime.humanizeTime(opts.getTimeBetweenRetries());
+			return new RetriableTask<>(opts.getRetriesCount(), timeBetween, new Callable<Response>() {
 
 				@Override
 				public Response call() throws Exception {
