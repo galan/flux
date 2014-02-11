@@ -17,11 +17,14 @@ import de.galan.flupi.FluentHttpClient.HttpBuilder;
 public class Flupi {
 
 	private static Long defaultTimeout;
+	private static Long defaultTimeoutConnection;
+	private static Long defaultTimeoutRead;
 	private static Map<String, String> defaultHeader;
 
 
 	/**
-	 * If no timeout is passed via the builder, a default timeout can be set with this method for further requests.
+	 * If no timeout is passed via the builder, a default timeout can be set for read and connection timeouts with this
+	 * method for further requests.
 	 * 
 	 * @param timeout Timeout in milliseconds
 	 */
@@ -31,7 +34,8 @@ public class Flupi {
 
 
 	/**
-	 * If no timeout is passed via the builder, a default timeout can be set with this method for further requests.
+	 * If no timeout is passed via the builder, a default timeout can be set for read and connection timeouts with this
+	 * method for further requests.
 	 * 
 	 * @param timeout Timeout in human time.
 	 */
@@ -41,11 +45,58 @@ public class Flupi {
 
 
 	/**
-	 * Added default headers will always be send, can still be overriden using the builder.
+	 * If no connection timeout is passed via the builder, a default connection timeout can be set with this method for
+	 * further requests.
 	 * 
-	 * @param key
-	 * @param value
+	 * @param timeoutConnection Connection timeout in milliseconds
 	 */
+	public static void setDefaultTimeoutConnection(long timeoutConnection) {
+		defaultTimeoutConnection = timeoutConnection;
+	}
+
+
+	/**
+	 * If no connection timeout is passed via the builder, a default connection timeout can be set with this method for
+	 * further requests.
+	 * 
+	 * @param timeoutConnection Connection timeout in human time.
+	 */
+	public static void setDefaultTimeoutConnection(String timeoutConnection) {
+		defaultTimeoutConnection = HumanTime.dehumanizeTime(timeoutConnection);
+	}
+
+
+	/**
+	 * If no read timeout is passed via the builder, a default read timeout can be set with this method for further
+	 * requests.
+	 * 
+	 * @param timeoutRead Read timeout in milliseconds
+	 */
+	public static void setDefaultTimeoutRead(long timeoutRead) {
+		defaultTimeoutRead = timeoutRead;
+	}
+
+
+	/**
+	 * If no read timeout is passed via the builder, a default read timeout can be set with this method for further
+	 * requests.
+	 * 
+	 * @param timeoutRead Read timeout in human time.
+	 */
+	public static void setDefaultTimeoutRead(String timeoutRead) {
+		defaultTimeoutRead = HumanTime.dehumanizeTime(timeoutRead);
+	}
+
+
+	/** Clears all default timeouts */
+	public static void clearTimeouts() {
+		defaultTimeout = null;
+		defaultTimeoutConnection = null;
+		defaultTimeoutRead = null;
+	}
+
+
+	/** Added default headers will always be send, can still be overriden using the builder. */
 	public static void addDefaultHeader(String key, String value) {
 		if (isNotBlank(key) && isNotBlank(value)) {
 			if (defaultHeader == null) {
@@ -53,6 +104,12 @@ public class Flupi {
 			}
 			defaultHeader.put(key, value);
 		}
+	}
+
+
+	/** Removes all default http-headers */
+	public static void clearDefaultHeader() {
+		defaultHeader = null;
 	}
 
 
@@ -85,6 +142,12 @@ public class Flupi {
 	private static HttpBuilder defaults(HttpBuilder builder) {
 		if (defaultTimeout != null) {
 			builder.timeout(defaultTimeout);
+		}
+		if (defaultTimeoutConnection != null) {
+			builder.timeoutConnection(defaultTimeoutConnection);
+		}
+		if (defaultTimeoutRead != null) {
+			builder.timeoutRead(defaultTimeoutRead);
 		}
 		if (defaultHeader != null) {
 			builder.headers(defaultHeader);

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.io.Charsets;
+import org.apache.commons.lang3.ObjectUtils;
 
 import de.galan.commons.time.HumanTime;
 import de.galan.flupi.proxy.CommonProxy;
@@ -64,6 +65,8 @@ public class FluentHttpClient {
 		String builderResource;
 		byte[] builderBody;
 		Long builderTimeout;
+		Long builderTimeoutConnection;
+		Long builderTimeoutRead;
 		CommonProxy builderProxy;
 		String builderUsername;
 		String builderPassword;
@@ -132,6 +135,38 @@ public class FluentHttpClient {
 
 		public HttpBuilder timeout(Long timeout) {
 			builderTimeout = timeout;
+			return this;
+		}
+
+
+		public HttpBuilder timeoutConnection(String timeoutConnection) {
+			return timeoutConnection(HumanTime.dehumanizeTime(timeoutConnection));
+		}
+
+
+		public HttpBuilder timeoutConnection(Integer timeoutConnection) {
+			return timeoutConnection((timeoutConnection == null) ? null : timeoutConnection.longValue());
+		}
+
+
+		public HttpBuilder timeoutConnection(Long timeoutConnection) {
+			builderTimeoutConnection = timeoutConnection;
+			return this;
+		}
+
+
+		public HttpBuilder timeoutRead(String timeoutRead) {
+			return timeoutRead(HumanTime.dehumanizeTime(timeoutRead));
+		}
+
+
+		public HttpBuilder timeoutRead(Integer timeoutRead) {
+			return timeoutRead((timeoutRead == null) ? null : timeoutRead.longValue());
+		}
+
+
+		public HttpBuilder timeoutRead(Long timeoutRead) {
+			builderTimeoutRead = timeoutRead;
 			return this;
 		}
 
@@ -274,7 +309,8 @@ public class FluentHttpClient {
 		public Response method(Method method) throws HttpClientException {
 			HttpClient client = (builderClient == null) ? new CommonHttpClient() : builderClient;
 			HttpOptions options = new HttpOptions();
-			options.setTimeout(builderTimeout);
+			options.setTimeoutConnection(ObjectUtils.defaultIfNull(builderTimeoutConnection, builderTimeout));
+			options.setTimeoutRead(ObjectUtils.defaultIfNull(builderTimeoutRead, builderTimeout));
 			options.enableAuthorization(builderUsername, builderPassword);
 			options.enableProxy(builderProxy);
 			options.enableRetries(builderRetries, builderRetriesTimebetween);
@@ -282,6 +318,7 @@ public class FluentHttpClient {
 			options.enableTimeoutThread(builderTimeoutThread);
 			return client.request(builderResource, method, builderHeader, builderParameter, builderBody, options);
 		}
+
 	}
 
 }

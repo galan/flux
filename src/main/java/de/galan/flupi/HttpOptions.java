@@ -13,7 +13,8 @@ public class HttpOptions {
 
 	private static final long DEFAULT_TIMEOUT = HumanTime.dehumanizeTime("5s");
 
-	private Long timeout;
+	private Long timeoutConnection;
+	private Long timeoutRead;
 	private String authorizationUsername;
 	private String authorizationPassword;
 	private CommonProxy proxy;
@@ -23,13 +24,23 @@ public class HttpOptions {
 	private Boolean timeoutThread = false;
 
 
-	public Long getTimeout() {
-		return timeout == null ? DEFAULT_TIMEOUT : timeout;
+	public Long getTimeoutConnection() {
+		return timeoutConnection == null ? DEFAULT_TIMEOUT : timeoutConnection;
 	}
 
 
-	public void setTimeout(Long timeout) {
-		this.timeout = timeout;
+	public void setTimeoutConnection(Long timeoutConnection) {
+		this.timeoutConnection = timeoutConnection;
+	}
+
+
+	public Long getTimeoutRead() {
+		return timeoutRead == null ? DEFAULT_TIMEOUT : timeoutRead;
+	}
+
+
+	public void setTimeoutRead(Long timeoutRead) {
+		this.timeoutRead = timeoutRead;
 	}
 
 

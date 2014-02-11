@@ -185,8 +185,8 @@ public class CommonHttpClient implements HttpClient {
 
 	private void initConnection(Map<String, String> extraHeader, HttpURLConnection connection, HttpOptions options) {
 		putAuthorization(connection, "Authorization", options.getAuthorizationUsername(), options.getAuthorizationPassword());
-		connection.setConnectTimeout(options.getTimeout().intValue());
-		connection.setReadTimeout(options.getTimeout().intValue());
+		connection.setConnectTimeout(options.getTimeoutConnection().intValue());
+		connection.setReadTimeout(options.getTimeoutRead().intValue());
 		connection.setDoOutput(true);
 		connection.setInstanceFollowRedirects(options.getFollowRedirects());
 		//extraHeader
@@ -253,7 +253,7 @@ public class CommonHttpClient implements HttpClient {
 
 
 	protected void startTimeoutThread(HttpURLConnection connection, HttpOptions options) {
-		TimeoutThread tt = new TimeoutThread(connection, options.getTimeout().intValue());
+		TimeoutThread tt = new TimeoutThread(connection, (int)(options.getTimeoutConnection() + options.getTimeoutRead()));
 		tt.start();
 	}
 
