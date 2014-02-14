@@ -50,6 +50,18 @@ If the proxy requires authentication use `proxyAuthentication(String username, S
 
     Flupi.request("http://host/resource").proxy("1.2.3.4:8080").proxyAuthentication("user", "pass").get();
 
+### Query parameters
+You can add parameter by calling the fluent `parameter`methods, adding multiple parameter with the same name is possible.
+
+    Flupi.request("http://host/resource").parameter("key", "value").get();
+    Flupi.request("http://host/resource").parameter("q", "search").paramter("page", "2").get();
+    Flupi.request("http://host/resource").parameter("cities", "hamburg", "halle").get();
+
+Additional methods for rarely used arguments are also available:
+
+* `paramter(Map<String, String>)`
+* `parameterList(Map<String, List<String>>)`.
+
 ### Timeout
 Setting the default connection and read timeout at once (can be overriden using the builder)
 
