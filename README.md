@@ -92,8 +92,8 @@ Actions that can be performed on the `Response` object:
 * `getStreamAsString(String encoding)` - Returns the body as String (`encoding` is used to decode the String)
 * `storeStream(File file)` - Stores the raw body in the given file
 * `storeStream(File file, boolean gunzip)` - Stores the raw body in the given file with the option to gzip it
-* `getContentEncoding()` -
-* `getContentType()` - 
+* `getContentEncoding()` - Returns the "Content-Encoding" header
+* `getContentType()` - Returns the "Content-Type" header
 * `getStatusCode()` - Returns the http status code
 * `isFailed()` - Returns true if the status code is not succeded
 * `isSucceded()` - Returns true if the status code is between 200 and 299
