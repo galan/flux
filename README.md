@@ -62,6 +62,12 @@ Additional methods for rarely used arguments are also available:
 * `paramter(Map<String, String>)`
 * `parameterList(Map<String, List<String>>)`.
 
+### Body
+You can pass a body by calling body
+
+    Flupi.request("http://host/resource").body("Hello World").get();
+    Flupi.request("http://host/resource").body(new byte[]{72, 101, 108, ...}).get();
+
 ### Timeout
 Setting the default connection and read timeout at once (can be overriden using the builder)
 
@@ -81,6 +87,12 @@ Setting the connection and read timeout independently
     Flupi.setDefaultTimeoutRead("1m");
     Flupi.request("http://host/resource").timeoutConnection("5s").get();
     Flupi.request("http://host/resource").timeoutRead("1m").get();
+
+### Retries
+Failed requests can be retried automatically, enable by setting the amount of retries and the time between the retries. If the retries also fail, the last failed response will be returned.
+
+    // repeat 2 times with 20 seconds in between
+    Flupi.request("http://host/resource").retries(2L, "10s").get(); 
 
 ## Response
 The `Response` returned from the HttpClient contains status information as well as an open connection to retrieve the stream (therefor the required `close()`or `AutoClosable` - benefit: you don't have to retrieve the whole content if you do not require it).
@@ -111,4 +123,3 @@ Actions that can be performed on the `Response` object:
 * For testing it is useful to know that you can utilize the `MockCommonHttpClient`. You can pass the `MockCommonHttpClient` with canned Responses.
 
   [1]: https://github.com/d8bitr/maven-repository
-
