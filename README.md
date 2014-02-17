@@ -91,7 +91,7 @@ Setting the connection and read timeout independently
 ### Retries
 Failed requests can be retried automatically, enable by setting the amount of retries and the time between the retries. If the retries also fail, the last failed response will be returned.
 
-    // repeat 2 times with 20 seconds in between
+    // repeat 2 times with 10 seconds in between
     Flupi.request("http://host/resource").retries(2L, "10s").get(); 
 
 ## Response
