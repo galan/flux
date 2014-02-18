@@ -41,15 +41,6 @@ The following methods are available:
 * `options()`
 * `method(Method method)`
     
-### Proxy
-Enable a proxy by passing the proxy to a `proxy(..)` method.
-
-    Flupi.request("http://host/resource").proxy("1.2.3.4:8080").get();
-
-If the proxy requires authentication use `proxyAuthentication(String username, String password)`.
-
-    Flupi.request("http://host/resource").proxy("1.2.3.4:8080").proxyAuthentication("user", "pass").get();
-
 ### Query parameters
 You can add parameter by calling the fluent `parameter`methods, adding multiple parameter with the same name is possible.
 
@@ -67,6 +58,30 @@ You can pass a body by calling body
 
     Flupi.request("http://host/resource").body("Hello World").get();
     Flupi.request("http://host/resource").body(new byte[]{72, 101, 108, ...}).get();
+
+### HTTP Header
+Beside the default header you can set the HTTP header for each request individualy. Methods available in the fluent builder:
+
+* header(String key, String value)
+* headers(Map<String, String> headers)
+
+For example:
+
+    Flupi.request("http://host/resource").header("X-Myapp", "Demo").header("User-Agent", "Flupi").get();
+    // code above does the same as below
+    Map<String, String> header = new HashMap<>();
+    header.put("X-Myapp", "Demo");
+    header.put("User-Agent", "Flupi");
+    Flupi.request("http://host/resource").headers(header).get();
+
+### Proxy
+Enable a proxy by passing the proxy to a `proxy(..)` method.
+
+    Flupi.request("http://host/resource").proxy("1.2.3.4:8080").get();
+
+If the proxy requires authentication use `proxyAuthentication(String username, String password)`.
+
+    Flupi.request("http://host/resource").proxy("1.2.3.4:8080").proxyAuthentication("user", "pass").get();
 
 ### Timeout
 Setting the default connection and read timeout at once (can be overriden using the builder)
@@ -93,6 +108,9 @@ Failed requests can be retried automatically, enable by setting the amount of re
 
     // repeat 2 times with 10 seconds in between
     Flupi.request("http://host/resource").retries(2L, "10s").get(); 
+
+### Redirects
+You can follow redirects by calling `followRedirects()`, this is enabled by default. To disable this feature call `unfollowRedirects()`.
 
 ## Response
 The `Response` returned from the HttpClient contains status information as well as an open connection to retrieve the stream (therefor the required `close()`or `AutoClosable` - benefit: you don't have to retrieve the whole content if you do not require it).
