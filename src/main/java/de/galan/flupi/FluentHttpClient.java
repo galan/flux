@@ -2,6 +2,7 @@ package de.galan.flupi;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -197,7 +198,12 @@ public class FluentHttpClient {
 
 
 		public HttpBuilder body(String body) {
-			builderBody = (body == null) ? null : body.getBytes(Charsets.UTF_8);
+			return body(body, Charsets.UTF_8);
+		}
+
+
+		public HttpBuilder body(String body, Charset charset) {
+			builderBody = (body == null) ? null : body.getBytes(charset);
 			return this;
 		}
 
