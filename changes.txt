@@ -1,0 +1,5 @@
+0.2
+- body(String, Charset) added
+
+0.1
+- Initial release
