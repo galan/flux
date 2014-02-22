@@ -3,7 +3,7 @@
 
 	<groupId>de.galan</groupId>
 	<artifactId>flux</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>Flux</name>
 	<description>Fluent http/rest-client interface</description>
 
