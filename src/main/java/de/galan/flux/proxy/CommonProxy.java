@@ -1,4 +1,4 @@
-package de.galan.flupi.proxy;
+package de.galan.flux.proxy;
 
 import static org.apache.commons.lang3.StringUtils.*;
 

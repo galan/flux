@@ -1,4 +1,4 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 import static org.junit.Assert.*;
 
@@ -13,6 +13,12 @@ import org.simpleframework.http.Request;
 
 import de.galan.commons.test.DummyContainer;
 import de.galan.commons.test.SimpleWebserverTestParent;
+import de.galan.flux.CommonHttpClient;
+import de.galan.flux.HttpClient;
+import de.galan.flux.HttpClientException;
+import de.galan.flux.HttpOptions;
+import de.galan.flux.Method;
+import de.galan.flux.Response;
 
 
 /**

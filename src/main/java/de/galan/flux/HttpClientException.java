@@ -1,4 +1,4 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 /**
  * Exception thrown while executing a remote http call.

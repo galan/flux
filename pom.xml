@@ -2,9 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>de.galan</groupId>
-	<artifactId>flupi</artifactId>
-	<version>0.2-SNAPSHOT</version>
-	<name>Flupi</name>
+	<artifactId>flux</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<name>Flux</name>
 	<description>Fluent http/rest-client interface</description>
 
 	<parent>
@@ -14,8 +14,8 @@
 	</parent>
 
 	<scm>
-		<developerConnection>scm:git:ssh://git@github.com/d8bitr/flupi.git</developerConnection>
-		<url>https://github.com/d8bitr/flupi</url>
+		<developerConnection>scm:git:ssh://git@github.com/d8bitr/flux.git</developerConnection>
+		<url>https://github.com/d8bitr/flux</url>
 	</scm>
 
 	<dependencies>

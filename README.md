@@ -15,20 +15,20 @@ Use the [maven repository and artifact][1] on github.
 ### Creating Requests
 Simplest case
 
-    Response response = Flupi.request("http://host/resource").get();
+    Response response = Flux.request("http://host/resource").get();
     System.out.println(response.getStreamAsString()); // Work with response, eg. print body
     response.close();
 
 Using AutoCloseable
 
-    try (Response response = Flupi.request("http://host/resource").get()) {
+    try (Response response = Flux.request("http://host/resource").get()) {
         System.out.println(response.getStreamAsString());
     }
 
 ### Methods
 Calling the HTTP methods executes the http requests and returns a `Response`.
 
-    Flupi.request("http://host/resource").get();
+    Flux.request("http://host/resource").get();
 
 The following methods are available:
 
@@ -44,9 +44,9 @@ The following methods are available:
 ### Query parameters
 You can add parameter by calling the fluent `parameter`methods, adding multiple parameter with the same name is possible.
 
-    Flupi.request("http://host/resource").parameter("key", "value").get();
-    Flupi.request("http://host/resource").parameter("q", "search").paramter("page", "2").get();
-    Flupi.request("http://host/resource").parameter("cities", "hamburg", "halle").get();
+    Flux.request("http://host/resource").parameter("key", "value").get();
+    Flux.request("http://host/resource").parameter("q", "search").paramter("page", "2").get();
+    Flux.request("http://host/resource").parameter("cities", "hamburg", "halle").get();
 
 Additional methods for rarely used arguments are also available:
 
@@ -56,8 +56,8 @@ Additional methods for rarely used arguments are also available:
 ### Body
 You can pass a body by calling body
 
-    Flupi.request("http://host/resource").body("Hello World").get();
-    Flupi.request("http://host/resource").body(new byte[]{72, 101, 108, ...}).get();
+    Flux.request("http://host/resource").body("Hello World").get();
+    Flux.request("http://host/resource").body(new byte[]{72, 101, 108, ...}).get();
 
 ### HTTP Header
 Beside the default header you can set the HTTP header for each request individualy. Methods available in the fluent builder:
@@ -67,47 +67,47 @@ Beside the default header you can set the HTTP header for each request individua
 
 For example:
 
-    Flupi.request("http://host/resource").header("X-Myapp", "Demo").header("User-Agent", "Flupi").get();
+    Flux.request("http://host/resource").header("X-Myapp", "Demo").header("User-Agent", "Flux").get();
     // code above does the same as below
     Map<String, String> header = new HashMap<>();
     header.put("X-Myapp", "Demo");
-    header.put("User-Agent", "Flupi");
-    Flupi.request("http://host/resource").headers(header).get();
+    header.put("User-Agent", "Flux");
+    Flux.request("http://host/resource").headers(header).get();
 
 ### Proxy
 Enable a proxy by passing the proxy to a `proxy(..)` method.
 
-    Flupi.request("http://host/resource").proxy("1.2.3.4:8080").get();
+    Flux.request("http://host/resource").proxy("1.2.3.4:8080").get();
 
 If the proxy requires authentication use `proxyAuthentication(String username, String password)`.
 
-    Flupi.request("http://host/resource").proxy("1.2.3.4:8080").proxyAuthentication("user", "pass").get();
+    Flux.request("http://host/resource").proxy("1.2.3.4:8080").proxyAuthentication("user", "pass").get();
 
 ### Timeout
 Setting the default connection and read timeout at once (can be overriden using the builder)
 
-    Flupi.setDefaultTimeout(2500L); // using 2,5 seconds default
-    Flupi.setDefaultTimeout("2s500ms"); // using 2,5 seconds default
-    Flupi.setDefaultTimeout("1m 5s"); // using 1 minutes and 5 seconds default
+    Flux.setDefaultTimeout(2500L); // using 2,5 seconds default
+    Flux.setDefaultTimeout("2s500ms"); // using 2,5 seconds default
+    Flux.setDefaultTimeout("1m 5s"); // using 1 minutes and 5 seconds default
 
 Setting the timeout using the builder
 
-    Flupi.request("http://host/resource").timeout(2500L).get(); // using 2,5 seconds
-    Flupi.request("http://host/resource").timeout("2s500ms").get(); // using 2,5 seconds
-    Flupi.request("http://host/resource").timeout("1m 5s").get(); // using 1 minutes and 5 seconds
+    Flux.request("http://host/resource").timeout(2500L).get(); // using 2,5 seconds
+    Flux.request("http://host/resource").timeout("2s500ms").get(); // using 2,5 seconds
+    Flux.request("http://host/resource").timeout("1m 5s").get(); // using 1 minutes and 5 seconds
 
 Setting the connection and read timeout independently
 
-    Flupi.setDefaultTimeoutConnection("5s");
-    Flupi.setDefaultTimeoutRead("1m");
-    Flupi.request("http://host/resource").timeoutConnection("5s").get();
-    Flupi.request("http://host/resource").timeoutRead("1m").get();
+    Flux.setDefaultTimeoutConnection("5s");
+    Flux.setDefaultTimeoutRead("1m");
+    Flux.request("http://host/resource").timeoutConnection("5s").get();
+    Flux.request("http://host/resource").timeoutRead("1m").get();
 
 ### Retries
 Failed requests can be retried automatically, enable by setting the amount of retries and the time between the retries. If the retries also fail, the last failed response will be returned.
 
     // repeat 2 times with 10 seconds in between
-    Flupi.request("http://host/resource").retries(2L, "10s").get(); 
+    Flux.request("http://host/resource").retries(2L, "10s").get(); 
 
 ### Redirects
 You can follow redirects by calling `followRedirects()`, this is enabled by default. To disable this feature call `unfollowRedirects()`.
@@ -136,8 +136,8 @@ Actions that can be performed on the `Response` object:
 * `close()` - Closes the response (stream); note that `Response` is `Autoclosable`
 
 # Notes & Hints
-* You don't have to use the static `Flupi` factory class, if you want to Inject the builder using a DI framework such as Guice, you can simply bind an instance of `FluentHttpClient`.
-* Flupi is thread-safe
+* You don't have to use the static `Flux` factory class, if you want to Inject the builder using a DI framework such as Guice, you can simply bind an instance of `FluentHttpClient`.
+* Flux is thread-safe
 * For testing it is useful to know that you can utilize the `MockCommonHttpClient`. You can pass the `MockCommonHttpClient` with canned Responses.
 
   [1]: https://github.com/d8bitr/maven-repository

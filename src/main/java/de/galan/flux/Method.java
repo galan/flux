@@ -1,4 +1,4 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 /**
  * List of available HTTP methods.

@@ -1,4 +1,4 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 import java.util.List;
 import java.util.Map;

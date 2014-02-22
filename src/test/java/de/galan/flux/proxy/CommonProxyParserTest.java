@@ -1,10 +1,12 @@
-package de.galan.flupi.proxy;
+package de.galan.flux.proxy;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import de.galan.commons.test.AbstractTestParent;
+import de.galan.flux.proxy.CommonProxy;
+import de.galan.flux.proxy.CommonProxyParser;
 
 
 /**

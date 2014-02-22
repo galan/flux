@@ -1,7 +1,7 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 import de.galan.commons.time.HumanTime;
-import de.galan.flupi.proxy.CommonProxy;
+import de.galan.flux.proxy.CommonProxy;
 
 
 /**

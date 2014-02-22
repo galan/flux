@@ -1,4 +1,4 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.galan.commons.time.HumanTime;
-import de.galan.flupi.FluentHttpClient.HttpBuilder;
+import de.galan.flux.FluentHttpClient.HttpBuilder;
 
 
 /**
@@ -14,7 +14,7 @@ import de.galan.flupi.FluentHttpClient.HttpBuilder;
  * 
  * @author daniel
  */
-public class Flupi {
+public class Flux {
 
 	private static Long defaultTimeout;
 	private static Long defaultTimeoutConnection;

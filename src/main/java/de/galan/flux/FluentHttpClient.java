@@ -1,4 +1,4 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
@@ -13,12 +13,12 @@ import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.ObjectUtils;
 
 import de.galan.commons.time.HumanTime;
-import de.galan.flupi.proxy.CommonProxy;
+import de.galan.flux.proxy.CommonProxy;
 
 
 /**
  * Creating fluent http requests (simplified fluent interface for HttpClient). Can be used directly when using eg. DI
- * such as Guice, or by using the static Factory class called Flupi.
+ * such as Guice, or by using the static Factory class called Flux.
  * 
  * @author daniel
  */

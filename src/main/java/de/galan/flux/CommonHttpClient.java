@@ -1,4 +1,4 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 import static org.apache.commons.lang3.StringUtils.*;
 

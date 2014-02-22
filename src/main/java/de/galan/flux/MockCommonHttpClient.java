@@ -1,4 +1,4 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

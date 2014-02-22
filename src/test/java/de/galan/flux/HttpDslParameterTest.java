@@ -1,4 +1,4 @@
-package de.galan.flupi;
+package de.galan.flux;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -13,7 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.galan.commons.test.AbstractTestParent;
-import de.galan.flupi.FluentHttpClient.HttpBuilder;
+import de.galan.flux.FluentHttpClient;
+import de.galan.flux.FluentHttpClient.HttpBuilder;
 
 
 /**
