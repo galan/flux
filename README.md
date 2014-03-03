@@ -42,7 +42,7 @@ The following methods are available:
 * `method(Method method)`
     
 ### Query parameters
-You can add parameter by calling the fluent `parameter`methods, adding multiple parameter with the same name is possible.
+You can add parameters by calling the fluent `parameter`methods, adding multiple parameter with the same name is possible.
 
     Flux.request("http://host/resource").parameter("key", "value").get();
     Flux.request("http://host/resource").parameter("q", "search").paramter("page", "2").get();
