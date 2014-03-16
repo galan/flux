@@ -54,7 +54,7 @@ Additional methods for rarely used arguments are also available:
 * `parameterList(Map<String, List<String>>)`.
 
 ### Body
-You can pass a body by calling body
+You can pass a body by calling the `body(..)` method.
 
     Flux.request("http://host/resource").body("Hello World").get();
     Flux.request("http://host/resource").body(new byte[]{72, 101, 108, ...}).get();
