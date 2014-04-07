@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Flux by d8bitr</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/d8bitr/flux">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/d8bitr/flux/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/d8bitr/flux/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Flux</h1>
+          <p>Fluent http/rest-client interface for Java</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/d8bitr">d8bitr</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <p>Efficient lightweight client-library for easy fluent http/rest requests in Java.</p>
+
+<h1>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h1>
+
+<ul>
+<li>HTTP methods GET, PUT, POST, DELETE, HEAD, TRACE and OPTIONS</li>
+<li>Basic-Authentication support</li>
+<li>Proxy support (with authentication)</li>
+<li>Configurable retries</li>
+<li>Configurable default timeouts and headers</li>
+</ul><h1>
+<a name="integration-with-maven" class="anchor" href="#integration-with-maven"><span class="octicon octicon-link"></span></a>Integration with Maven</h1>
+
+<p>Use the <a href="https://github.com/d8bitr/maven-repository">maven repository and artifact</a> on github.</p>
+
+<h1>
+<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example usage</h1>
+
+<h2>
+<a name="requests" class="anchor" href="#requests"><span class="octicon octicon-link"></span></a>Requests</h2>
+
+<h3>
+<a name="creating-requests" class="anchor" href="#creating-requests"><span class="octicon octicon-link"></span></a>Creating Requests</h3>
+
+<p>Simplest case</p>
+
+<pre><code>Response response = Flux.request("http://host/resource").get();
+System.out.println(response.getStreamAsString()); // Work with response, eg. print body
+response.close();
+</code></pre>
+
+<p>Using AutoCloseable</p>
+
+<pre><code>try (Response response = Flux.request("http://host/resource").get()) {
+    System.out.println(response.getStreamAsString());
+}
+</code></pre>
+
+<h3>
+<a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h3>
+
+<p>Calling the HTTP methods executes the http requests and returns a <code>Response</code>.</p>
+
+<pre><code>Flux.request("http://host/resource").get();
+</code></pre>
+
+<p>The following methods are available:</p>
+
+<ul>
+<li><code>get()</code></li>
+<li><code>put()</code></li>
+<li><code>post()</code></li>
+<li><code>delete()</code></li>
+<li><code>head()</code></li>
+<li><code>trace()</code></li>
+<li><code>options()</code></li>
+<li><code>method(Method method)</code></li>
+</ul><h3>
+<a name="query-parameters" class="anchor" href="#query-parameters"><span class="octicon octicon-link"></span></a>Query parameters</h3>
+
+<p>You can add parameters by calling the fluent <code>parameter</code>methods, adding multiple parameter with the same name is possible.</p>
+
+<pre><code>Flux.request("http://host/resource").parameter("key", "value").get();
+Flux.request("http://host/resource").parameter("q", "search").paramter("page", "2").get();
+Flux.request("http://host/resource").parameter("cities", "hamburg", "halle").get();
+</code></pre>
+
+<p>Additional methods for rarely used arguments are also available:</p>
+
+<ul>
+<li><code>paramter(Map&lt;String, String&gt;)</code></li>
+<li>
+<code>parameterList(Map&lt;String, List&lt;String&gt;&gt;)</code>.</li>
+</ul><h3>
+<a name="body" class="anchor" href="#body"><span class="octicon octicon-link"></span></a>Body</h3>
+
+<p>You can pass a body by calling the <code>body(..)</code> method.</p>
+
+<pre><code>Flux.request("http://host/resource").body("Hello World").get();
+Flux.request("http://host/resource").body(new byte[]{72, 101, 108, ...}).get();
+</code></pre>
+
+<h3>
+<a name="http-header" class="anchor" href="#http-header"><span class="octicon octicon-link"></span></a>HTTP Header</h3>
+
+<p>Beside the default header you can set the HTTP header for each request individualy. Methods available in the fluent builder:</p>
+
+<ul>
+<li>header(String key, String value)</li>
+<li>headers(Map headers)</li>
+</ul><p>For example:</p>
+
+<pre><code>Flux.request("http://host/resource").header("X-Myapp", "Demo").header("User-Agent", "Flux").get();
+// code above does the same as below
+Map&lt;String, String&gt; header = new HashMap&lt;&gt;();
+header.put("X-Myapp", "Demo");
+header.put("User-Agent", "Flux");
+Flux.request("http://host/resource").headers(header).get();
+</code></pre>
+
+<h3>
+<a name="proxy" class="anchor" href="#proxy"><span class="octicon octicon-link"></span></a>Proxy</h3>
+
+<p>Enable a proxy by passing the proxy to a <code>proxy(..)</code> method.</p>
+
+<pre><code>Flux.request("http://host/resource").proxy("1.2.3.4:8080").get();
+</code></pre>
+
+<p>If the proxy requires authentication use <code>proxyAuthentication(String username, String password)</code>.</p>
+
+<pre><code>Flux.request("http://host/resource").proxy("1.2.3.4:8080").proxyAuthentication("user", "pass").get();
+</code></pre>
+
+<h3>
+<a name="timeout" class="anchor" href="#timeout"><span class="octicon octicon-link"></span></a>Timeout</h3>
+
+<p>Setting the default connection and read timeout at once (can be overriden using the builder)</p>
+
+<pre><code>Flux.setDefaultTimeout(2500L); // using 2,5 seconds default
+Flux.setDefaultTimeout("2s500ms"); // using 2,5 seconds default
+Flux.setDefaultTimeout("1m 5s"); // using 1 minutes and 5 seconds default
+</code></pre>
+
+<p>Setting the timeout using the builder</p>
+
+<pre><code>Flux.request("http://host/resource").timeout(2500L).get(); // using 2,5 seconds
+Flux.request("http://host/resource").timeout("2s500ms").get(); // using 2,5 seconds
+Flux.request("http://host/resource").timeout("1m 5s").get(); // using 1 minutes and 5 seconds
+</code></pre>
+
+<p>Setting the connection and read timeout independently</p>
+
+<pre><code>Flux.setDefaultTimeoutConnection("5s");
+Flux.setDefaultTimeoutRead("1m");
+Flux.request("http://host/resource").timeoutConnection("5s").get();
+Flux.request("http://host/resource").timeoutRead("1m").get();
+</code></pre>
+
+<h3>
+<a name="retries" class="anchor" href="#retries"><span class="octicon octicon-link"></span></a>Retries</h3>
+
+<p>Failed requests can be retried automatically, enable by setting the amount of retries and the time between the retries. If the retries also fail, the last failed response will be returned.</p>
+
+<pre><code>// repeat 2 times with 10 seconds in between
+Flux.request("http://host/resource").retries(2L, "10s").get(); 
+</code></pre>
+
+<h3>
+<a name="redirects" class="anchor" href="#redirects"><span class="octicon octicon-link"></span></a>Redirects</h3>
+
+<p>You can follow redirects by calling <code>followRedirects()</code>, this is enabled by default. To disable this feature call <code>unfollowRedirects()</code>.</p>
+
+<h2>
+<a name="response" class="anchor" href="#response"><span class="octicon octicon-link"></span></a>Response</h2>
+
+<p>The <code>Response</code> returned from the HttpClient contains status information as well as an open connection to retrieve the stream (therefor the required <code>close()</code>or <code>AutoClosable</code> - benefit: you don't have to retrieve the whole content if you do not require it).</p>
+
+<p>Actions that can be performed on the <code>Response</code> object:</p>
+
+<ul>
+<li>
+<code>getStream()</code> - Returns the raw body <code>InputStream</code>
+</li>
+<li>
+<code>getStreamAsBytearray()</code>- Returns the raw body as Byte array (<code>byte[]</code>)</li>
+<li>
+<code>getStreamAsString()</code> - Returns the body as String (UTF-8 is assumed)</li>
+<li>
+<code>getStreamAsString(String encoding)</code> - Returns the body as String (<code>encoding</code> is used to decode the String)</li>
+<li>
+<code>storeStream(File file)</code> - Stores the raw body in the given file</li>
+<li>
+<code>storeStream(File file, boolean gunzip)</code> - Stores the raw body in the given file with the option to gzip it</li>
+<li>
+<code>getContentEncoding()</code> - Returns the "Content-Encoding" header</li>
+<li>
+<code>getContentType()</code> - Returns the "Content-Type" header</li>
+<li>
+<code>getStatusCode()</code> - Returns the http status code</li>
+<li>
+<code>isFailed()</code> - Returns true if the status code is not succeded</li>
+<li>
+<code>isSucceded()</code> - Returns true if the status code is between 200 and 299</li>
+<li>
+<code>isInformational()</code> - Returns true if the status code is between 100 and 199</li>
+<li>
+<code>isRedirection()</code> - Returns true if the status code is between 300 and 399</li>
+<li>
+<code>isClientError()</code> - Returns true if the status code is between 400 and 499</li>
+<li>
+<code>isServerError()</code> - Returns true if the status code is between 500 and 599</li>
+<li>
+<code>getHeaderField(String name)</code> - Returns the value for a response header</li>
+<li>
+<code>getHeaderFields()</code> - Returns all response headers as <code>Map&lt;String, String&gt;</code>
+</li>
+<li>
+<code>close()</code> - Closes the response (stream); note that <code>Response</code> is <code>Autoclosable</code>
+</li>
+</ul><h1>
+<a name="notes--hints" class="anchor" href="#notes--hints"><span class="octicon octicon-link"></span></a>Notes &amp; Hints</h1>
+
+<ul>
+<li>You don't have to use the static <code>Flux</code> factory class, if you want to Inject the builder using a DI framework such as Guice, you can simply bind an instance of <code>FluentHttpClient</code>.</li>
+<li>Flux is thread-safe</li>
+<li>For testing it is useful to know that you can utilize the <code>MockCommonHttpClient</code>. You can pass the <code>MockCommonHttpClient</code> with canned Responses.</li>
+</ul>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
