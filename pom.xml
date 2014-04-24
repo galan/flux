@@ -14,8 +14,8 @@
 	</parent>
 
 	<scm>
-		<developerConnection>scm:git:ssh://git@github.com/d8bitr/flux.git</developerConnection>
-		<url>https://github.com/d8bitr/flux</url>
+		<developerConnection>scm:git:ssh://git@github.com/galan/flux.git</developerConnection>
+		<url>https://github.com/galan/flux</url>
 	</scm>
 
 	<dependencies>

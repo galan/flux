@@ -140,4 +140,4 @@ Actions that can be performed on the `Response` object:
 * Flux is thread-safe
 * For testing it is useful to know that you can utilize the `MockCommonHttpClient`. You can pass the `MockCommonHttpClient` with canned Responses.
 
-  [1]: https://github.com/d8bitr/maven-repository
+  [1]: https://github.com/galan/maven-repository
