@@ -3,14 +3,14 @@
 
 	<groupId>de.galan</groupId>
 	<artifactId>flux</artifactId>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.2</version>
 	<name>Flux</name>
 	<description>Fluent http/rest-client interface</description>
 
 	<parent>
 		<groupId>de.galan</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.2</version>
+		<version>0.3</version>
 	</parent>
 
 	<scm>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>de.galan</groupId>
 			<artifactId>commons</artifactId>
-			<version>0.3</version>
+			<version>0.4</version>
 		</dependency>
 
 		<dependency>
