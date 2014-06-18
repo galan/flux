@@ -11,8 +11,8 @@ import de.galan.commons.logging.Logr;
 
 
 /**
- * Parses a given proxy in form [username[:password]@]ip[:port]
- * 
+ * Parses a given proxy in form [username[:password]@](ip|hostname)[:port]
+ *
  * @author daniel
  */
 public class CommonProxyParser {
@@ -22,6 +22,20 @@ public class CommonProxyParser {
 
 
 	public CommonProxy parse(String proxy) {
+		/* better approach for ips as well as hostnames
+		try {
+			URI uri = new URI("http", "//" + proxy, null);
+			URL url = uri.toURL();
+			String host = url.getHost();
+			int portUrl = url.getPort();
+			int port = (portUrl < 1) || (portUrl > 65535) ? CommonProxy.DEFAULT_PORT : portUrl;
+			String userInfo = url.getUserInfo();
+			String x = null;
+		}
+		catch (URISyntaxException | MalformedURLException ex) {
+			//Say.warn("Unspecified error from daniel", ex);
+		}
+		 */
 		return parse(proxy, CommonProxy.DEFAULT_PORT);
 	}
 
