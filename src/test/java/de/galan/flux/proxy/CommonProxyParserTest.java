@@ -5,13 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import de.galan.commons.test.AbstractTestParent;
-import de.galan.flux.proxy.CommonProxy;
-import de.galan.flux.proxy.CommonProxyParser;
 
 
 /**
  * CUT CommonProxyParser
- * 
+ *
  * @author daniel
  */
 public class CommonProxyParserTest extends AbstractTestParent {
@@ -21,20 +19,27 @@ public class CommonProxyParserTest extends AbstractTestParent {
 
 	@Test
 	public void parse() {
-		assertValid("1.2.3.4", null, null, "1.2.3.4", 80);
-		assertValid("1.2.3.4:8888", null, null, "1.2.3.4", 8888);
-		assertValid("1.2.3.4:123", null, null, "1.2.3.4", 123);
-		assertValid("uuu@1.2.3.4", "uuu", null, "1.2.3.4", 80);
-		assertValid("uuu@1.2.3.4:123", "uuu", null, "1.2.3.4", 123);
-		assertValid("uuu:ppp@1.2.3.4", "uuu", "ppp", "1.2.3.4", 80);
-		assertValid("uuu:ppp@1.2.3.4:123", "uuu", "ppp", "1.2.3.4", 123);
-		assertInvalid("@1.2.3.4");
-		assertInvalid("uuu:@1.2.3.4");
-		assertInvalid(":ppp@1.2.3.4");
-		assertInvalid("uuu@ppp@1.2.3.4");
-		assertInvalid("uuu:ppp@1.2.3.4@12323");
-		assertInvalid("uuu@ppp:1.2.3.4@12323");
-		assertInvalid("1.2.3.4:8888,9999");
+		parse("1.2.3.4");
+		parse("example.com");
+		parse("some.example.com");
+	}
+
+
+	private void parse(String hostname) {
+		assertValid(hostname, null, null, hostname, 80);
+		assertValid(hostname + ":8888", null, null, hostname, 8888);
+		assertValid(hostname + ":123", null, null, hostname, 123);
+		assertValid("uuu@" + hostname, "uuu", null, hostname, 80);
+		assertValid("uuu@" + hostname + ":123", "uuu", null, hostname, 123);
+		assertValid("uuu:ppp@" + hostname, "uuu", "ppp", hostname, 80);
+		assertValid("uuu:ppp@" + hostname + ":123", "uuu", "ppp", hostname, 123);
+		assertValid("@" + hostname, null, null, hostname, 80);
+		assertValid("uuu:@" + hostname, "uuu", null, hostname, 80);
+		assertValid("uuu@ppp@" + hostname, "uuu", null, "ppp@" + hostname, 80); // seems to be valid for java.net.URL/URI
+		assertValid(":ppp@" + hostname, null, "ppp", hostname, 80);
+		assertValid("uuu:ppp@" + hostname + "@12323", "uuu", "ppp", hostname + "@12323", 80); // seems to be valid for java.net.URL/URI
+		assertInvalid("uuu@ppp:" + hostname + "@12323");
+		assertInvalid(hostname + ":8888,9999");
 	}
 
 
