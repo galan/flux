@@ -13,13 +13,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.galan.commons.test.AbstractTestParent;
-import de.galan.flux.FluentHttpClient;
 import de.galan.flux.FluentHttpClient.HttpBuilder;
 
 
 /**
  * CUT HttpDsl
- * 
+ *
  * @author daniel
  */
 public class HttpDslParameterTest extends AbstractTestParent {

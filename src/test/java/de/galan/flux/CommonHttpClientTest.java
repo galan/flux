@@ -13,17 +13,11 @@ import org.simpleframework.http.Request;
 
 import de.galan.commons.test.DummyContainer;
 import de.galan.commons.test.SimpleWebserverTestParent;
-import de.galan.flux.CommonHttpClient;
-import de.galan.flux.HttpClient;
-import de.galan.flux.HttpClientException;
-import de.galan.flux.HttpOptions;
-import de.galan.flux.Method;
-import de.galan.flux.Response;
 
 
 /**
  * CUT CommonHttpClientTest.
- * 
+ *
  * @author daniel
  */
 public class CommonHttpClientTest extends SimpleWebserverTestParent {
@@ -79,7 +73,7 @@ public class CommonHttpClientTest extends SimpleWebserverTestParent {
 		CommonHttpClient client = new CommonHttpClient();
 		Map<String, String> header = new HashMap<String, String>();
 		header.put("Content-Type", "text/html; charset=UTF-8");
-		try (Response response = client.request("http://localhost:12345", Method.GET, header, null, null)) {
+		try (Response response = client.request("http://localhost:12345", Method.GET, header, null, null, null)) {
 			assertEquals(200, response.getStatusCode());
 		}
 	}

@@ -2,6 +2,7 @@ package de.galan.flux;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import de.galan.flux.proxy.CommonProxy;
 /**
  * Creating fluent http requests (simplified fluent interface for HttpClient). Can be used directly when using eg. DI
  * such as Guice, or by using the static Factory class called Flux.
- * 
+ *
  * @author daniel
  */
 public class FluentHttpClient {
@@ -58,6 +59,11 @@ public class FluentHttpClient {
 
 	public HttpBuilder request(String resource) {
 		return new HttpBuilder(getClient(true), resource);
+	}
+
+
+	public HttpBuilder request(URL resource) {
+		return new HttpBuilder(getClient(true), resource.toString());
 	}
 
 	/** Builder */

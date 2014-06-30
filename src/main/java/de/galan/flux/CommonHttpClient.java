@@ -35,7 +35,7 @@ import de.galan.commons.util.RetriableTask;
 
 /**
  * Provides a simple HTTP client for most use-cases, reusable.
- * 
+ *
  * @author daniel
  */
 public class CommonHttpClient implements HttpClient {
@@ -90,19 +90,13 @@ public class CommonHttpClient implements HttpClient {
 
 
 	public Response request(String resource) throws HttpClientException {
-		return request(resource, null, null, null, null);
+		return request(resource, null, null, null, null, null);
 	}
 
 
 	public Response request(String protocol, String host, Integer port, String path, Method method, Map<String, String> extraHeader, Map<String, List<String>> parameters, byte[] body) throws HttpClientException {
 		String buildUrl = constructResource(protocol, host, port, path);
-		return request(buildUrl, method, extraHeader, parameters, body);
-	}
-
-
-	@Override
-	public Response request(String resource, Method method, Map<String, String> extraHeader, Map<String, List<String>> parameters, byte[] body) throws HttpClientException {
-		return request(resource, method, extraHeader, parameters, body, null);
+		return request(buildUrl, method, extraHeader, parameters, body, null);
 	}
 
 

@@ -2,6 +2,7 @@ package de.galan.flux;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import de.galan.flux.FluentHttpClient.HttpBuilder;
 
 /**
  * Static accessor to FluentHttpClient with option to set default configuration.
- * 
+ *
  * @author daniel
  */
 public class Flux {
@@ -25,7 +26,7 @@ public class Flux {
 	/**
 	 * If no timeout is passed via the builder, a default timeout can be set for read and connection timeouts with this
 	 * method for further requests.
-	 * 
+	 *
 	 * @param timeout Timeout in milliseconds
 	 */
 	public static void setDefaultTimeout(long timeout) {
@@ -36,7 +37,7 @@ public class Flux {
 	/**
 	 * If no timeout is passed via the builder, a default timeout can be set for read and connection timeouts with this
 	 * method for further requests.
-	 * 
+	 *
 	 * @param timeout Timeout in human time.
 	 */
 	public static void setDefaultTimeout(String timeout) {
@@ -47,7 +48,7 @@ public class Flux {
 	/**
 	 * If no connection timeout is passed via the builder, a default connection timeout can be set with this method for
 	 * further requests.
-	 * 
+	 *
 	 * @param timeoutConnection Connection timeout in milliseconds
 	 */
 	public static void setDefaultTimeoutConnection(long timeoutConnection) {
@@ -58,7 +59,7 @@ public class Flux {
 	/**
 	 * If no connection timeout is passed via the builder, a default connection timeout can be set with this method for
 	 * further requests.
-	 * 
+	 *
 	 * @param timeoutConnection Connection timeout in human time.
 	 */
 	public static void setDefaultTimeoutConnection(String timeoutConnection) {
@@ -69,7 +70,7 @@ public class Flux {
 	/**
 	 * If no read timeout is passed via the builder, a default read timeout can be set with this method for further
 	 * requests.
-	 * 
+	 *
 	 * @param timeoutRead Read timeout in milliseconds
 	 */
 	public static void setDefaultTimeoutRead(long timeoutRead) {
@@ -80,7 +81,7 @@ public class Flux {
 	/**
 	 * If no read timeout is passed via the builder, a default read timeout can be set with this method for further
 	 * requests.
-	 * 
+	 *
 	 * @param timeoutRead Read timeout in human time.
 	 */
 	public static void setDefaultTimeoutRead(String timeoutRead) {
@@ -115,7 +116,7 @@ public class Flux {
 
 	/**
 	 * Specifies the resource to be requested.
-	 * 
+	 *
 	 * @param resource The URL to request, including protocol.
 	 * @return The HttpBuilder
 	 */
@@ -126,7 +127,18 @@ public class Flux {
 
 	/**
 	 * Specifies the resource to be requested.
-	 * 
+	 *
+	 * @param resource The URL to request.
+	 * @return The HttpBuilder
+	 */
+	public static HttpBuilder request(URL resource) {
+		return defaults(new FluentHttpClient().request(resource));
+	}
+
+
+	/**
+	 * Specifies the resource to be requested.
+	 *
 	 * @param protocol Protocol of the resource
 	 * @param host Host of the resource
 	 * @param port Port the host is listening on

@@ -14,7 +14,7 @@ import com.google.common.collect.Iterators;
 
 /**
  * Test helper for collecting requests and responding to http clients.
- * 
+ *
  * @author daniel
  */
 public class MockCommonHttpClient implements HttpClient {
@@ -48,12 +48,6 @@ public class MockCommonHttpClient implements HttpClient {
 			return null;
 		}
 		return responses.next();
-	}
-
-
-	@Override
-	public Response request(String resource, Method method, Map<String, String> extraHeader, Map<String, List<String>> parameters, byte[] body) throws HttpClientException {
-		return request(resource, method, extraHeader, parameters, body, null);
 	}
 
 
