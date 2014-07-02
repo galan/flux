@@ -23,13 +23,35 @@ public class MockCommonHttpClient implements HttpClient {
 	private List<Request> requests = new ArrayList<Request>();
 
 
+	public MockCommonHttpClient() {
+		// nada
+	}
+
+
+	public MockCommonHttpClient(Response response) {
+		setResponse(response);
+	}
+
+
 	public void setResponse(Response response) {
 		setResponses(true, response);
 	}
 
 
+	public MockCommonHttpClient response(Response response) {
+		setResponse(response);
+		return this;
+	}
+
+
 	public void setResponses(boolean repeat, Response... response) {
 		responses = repeat ? Iterators.cycle(response) : Iterators.forArray(response);
+	}
+
+
+	public MockCommonHttpClient responses(boolean repeat, Response... response) {
+		setResponses(repeat, response);
+		return this;
 	}
 
 
