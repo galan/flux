@@ -52,7 +52,7 @@ public class FluentHttpClient {
 
 
 	public HttpBuilder request(String protocol, String host, Integer port, String path) {
-		String resource = new CommonHttpClient().constructResource(protocol, host, port, path);
+		String resource = UrlConstruction.constructResource(protocol, host, port, path);
 		return request(resource);
 	}
 
@@ -247,6 +247,12 @@ public class FluentHttpClient {
 		}
 
 
+		/* Short notation for parameter(..) */
+		public HttpBuilder param(String key, String... values) {
+			return parameter(key, values);
+		}
+
+
 		public HttpBuilder parameterMap(Map<String, String> parameters) {
 			if (parameters != null) {
 				for (Entry<String, String> entry: parameters.entrySet()) {
@@ -331,6 +337,11 @@ public class FluentHttpClient {
 			return client.request(builderResource, method, builderHeader, builderParameter, builderBody, options);
 		}
 
+
+		/** Return the URL the builder would generate as String, does not include header, etc. */
+		public String toUrlString() {
+			return UrlConstruction.appendParameters(builderResource, builderParameter);
+		}
 	}
 
 }

@@ -16,7 +16,6 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -27,7 +26,6 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 
 import de.galan.commons.logging.Logr;
-import de.galan.commons.net.UrlUtil;
 import de.galan.commons.time.HumanTime;
 import de.galan.commons.time.Sleeper;
 import de.galan.commons.util.RetriableTask;
@@ -48,54 +46,13 @@ public class CommonHttpClient implements HttpClient {
 	}
 
 
-	String appendParameters(String resource, Map<String, List<String>> parameters) {
-		StringBuilder builder = new StringBuilder(resource);
-		if (parameters != null && !parameters.isEmpty()) {
-			boolean first = true;
-			for (Entry<String, List<String>> entry: parameters.entrySet()) {
-				for (String value: entry.getValue()) {
-					if (entry.getValue() != null) {
-						if (first) {
-							builder.append(contains(resource, "?") ? "&" : "?");
-							first = false;
-						}
-						else {
-							builder.append("&");
-						}
-						builder.append(entry.getKey());
-						if (value != null) {
-							builder.append("=");
-							builder.append(UrlUtil.encode(value.toString(), Charsets.UTF_8));
-						}
-					}
-				}
-			}
-		}
-		return builder.toString();
-	}
-
-
-	String constructResource(String protocol, String host, Integer port, String path) {
-		StringBuilder builder = new StringBuilder();
-		builder.append(defaultIfBlank(protocol, "http"));
-		builder.append("://");
-		builder.append(host);
-		if ((port != null) && (port > 0)) {
-			builder.append(":");
-			builder.append(port);
-		}
-		builder.append(startsWith(path, "/") ? path : "/" + path);
-		return builder.toString();
-	}
-
-
 	public Response request(String resource) throws HttpClientException {
 		return request(resource, null, null, null, null, null);
 	}
 
 
 	public Response request(String protocol, String host, Integer port, String path, Method method, Map<String, String> extraHeader, Map<String, List<String>> parameters, byte[] body) throws HttpClientException {
-		String buildUrl = constructResource(protocol, host, port, path);
+		String buildUrl = UrlConstruction.constructResource(protocol, host, port, path);
 		return request(buildUrl, method, extraHeader, parameters, body, null);
 	}
 
@@ -105,7 +62,7 @@ public class CommonHttpClient implements HttpClient {
 		final HttpOptions opts = (options != null) ? options : new HttpOptions();
 		final URL url;
 		try {
-			url = new URL(appendParameters(resource, parameters));
+			url = new URL(UrlConstruction.appendParameters(resource, parameters));
 		}
 		catch (MalformedURLException muex) {
 			throw new HttpClientException("URL invalid", muex);
