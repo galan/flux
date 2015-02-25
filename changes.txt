@@ -1,3 +1,11 @@
+0.4
+- added URL to request(..)
+- Java 8
+- commons updated
+
+0.3
+- improved proxy ips and hostnames
+
 0.2
 - body(String, Charset) added
 
