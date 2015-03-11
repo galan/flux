@@ -1,3 +1,6 @@
+0.5 (dev)
+- Log4j2 instead of Slf4j
+
 0.4
 - added URL to request(..)
 - Java 8

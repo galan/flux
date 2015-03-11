@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
-import org.slf4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Splitter;
 

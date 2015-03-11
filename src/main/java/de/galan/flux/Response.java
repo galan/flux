@@ -12,20 +12,21 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableMap;
+
+import de.galan.commons.logging.Logr;
 
 
 /**
  * Represents the reponse to a http service.
- * 
+ *
  * @author daniel
  */
 public class Response implements AutoCloseable {
 
-	private static final Logger LOG = LoggerFactory.getLogger(Response.class);
+	private static final Logger LOG = Logr.get();
 
 	private final static Map<String, String> EMPTY_HEADERS = ImmutableMap.of();
 
