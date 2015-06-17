@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.ObjectUtils;
@@ -294,8 +297,18 @@ public class FluentHttpClient {
 		}
 
 
+		public Future<Response> getAsync() {
+			return callAsync(this::get);
+		}
+
+
 		public Response put() throws HttpClientException {
 			return method(Method.PUT);
+		}
+
+
+		public Future<Response> putAsync() {
+			return callAsync(this::put);
 		}
 
 
@@ -304,8 +317,18 @@ public class FluentHttpClient {
 		}
 
 
+		public Future<Response> postAsync() {
+			return callAsync(this::post);
+		}
+
+
 		public Response delete() throws HttpClientException {
 			return method(Method.DELETE);
+		}
+
+
+		public Future<Response> deleteAsync() {
+			return callAsync(this::delete);
 		}
 
 
@@ -314,13 +337,33 @@ public class FluentHttpClient {
 		}
 
 
+		public Future<Response> headAsync() {
+			return callAsync(this::head);
+		}
+
+
 		public Response trace() throws HttpClientException {
 			return method(Method.TRACE);
 		}
 
 
+		public Future<Response> traceAsync() {
+			return callAsync(this::trace);
+		}
+
+
 		public Response options() throws HttpClientException {
 			return method(Method.OPTIONS);
+		}
+
+
+		public Future<Response> optionsAsync() {
+			return callAsync(this::options);
+		}
+
+
+		public Future<Response> methodAsync(Method method) {
+			return callAsync(() -> method(method));
 		}
 
 
@@ -338,10 +381,18 @@ public class FluentHttpClient {
 		}
 
 
+		protected Future<Response> callAsync(Callable<Response> callable) {
+			FutureTask<Response> task = new FutureTask<>(callable);
+			new Thread(task).start();
+			return task;
+		}
+
+
 		/** Return the URL the builder would generate as String, does not include header, etc. */
 		public String toUrlString() {
 			return UrlConstruction.appendParameters(builderResource, builderParameter);
 		}
+
 	}
 
 }

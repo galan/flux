@@ -1,5 +1,6 @@
 0.5 (dev)
 - Log4j2 instead of Slf4j
+- Asynchronous calls for each http-method
 
 0.4
 - added URL to request(..)
