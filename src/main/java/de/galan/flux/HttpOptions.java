@@ -1,17 +1,17 @@
 package de.galan.flux;
 
-import de.galan.commons.time.HumanTime;
+import de.galan.commons.time.Durations;
 import de.galan.flux.proxy.CommonProxy;
 
 
 /**
  * Additional behaviour options for the HttpClient
- * 
+ *
  * @author daniel
  */
 public class HttpOptions {
 
-	private static final long DEFAULT_TIMEOUT = HumanTime.dehumanizeTime("5s");
+	private static final long DEFAULT_TIMEOUT = Durations.dehumanize("5s");
 
 	private Long timeoutConnection;
 	private Long timeoutRead;
@@ -78,7 +78,7 @@ public class HttpOptions {
 
 
 	public void enableRetries(Long retries, String timeBetween) {
-		enableRetries(retries, HumanTime.dehumanizeTime(timeBetween));
+		enableRetries(retries, Durations.dehumanize(timeBetween));
 	}
 
 

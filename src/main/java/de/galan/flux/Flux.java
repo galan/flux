@@ -5,8 +5,9 @@ import static org.apache.commons.lang3.StringUtils.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
-import de.galan.commons.time.HumanTime;
+import de.galan.commons.time.Durations;
 import de.galan.flux.FluentHttpClient.HttpBuilder;
 
 
@@ -21,6 +22,7 @@ public class Flux {
 	private static Long defaultTimeoutConnection;
 	private static Long defaultTimeoutRead;
 	private static Map<String, String> defaultHeader;
+	private static Supplier<HttpClient> clientFactory;
 
 
 	/**
@@ -41,7 +43,7 @@ public class Flux {
 	 * @param timeout Timeout in human time.
 	 */
 	public static void setDefaultTimeout(String timeout) {
-		defaultTimeout = HumanTime.dehumanizeTime(timeout);
+		defaultTimeout = Durations.dehumanize(timeout);
 	}
 
 
@@ -63,7 +65,7 @@ public class Flux {
 	 * @param timeoutConnection Connection timeout in human time.
 	 */
 	public static void setDefaultTimeoutConnection(String timeoutConnection) {
-		defaultTimeoutConnection = HumanTime.dehumanizeTime(timeoutConnection);
+		defaultTimeoutConnection = Durations.dehumanize(timeoutConnection);
 	}
 
 
@@ -85,7 +87,7 @@ public class Flux {
 	 * @param timeoutRead Read timeout in human time.
 	 */
 	public static void setDefaultTimeoutRead(String timeoutRead) {
-		defaultTimeoutRead = HumanTime.dehumanizeTime(timeoutRead);
+		defaultTimeoutRead = Durations.dehumanize(timeoutRead);
 	}
 
 
@@ -121,7 +123,7 @@ public class Flux {
 	 * @return The HttpBuilder
 	 */
 	public static HttpBuilder request(String resource) {
-		return defaults(new FluentHttpClient().request(resource));
+		return defaults(createClient().request(resource));
 	}
 
 
@@ -132,7 +134,7 @@ public class Flux {
 	 * @return The HttpBuilder
 	 */
 	public static HttpBuilder request(URL resource) {
-		return defaults(new FluentHttpClient().request(resource));
+		return defaults(createClient().request(resource));
 	}
 
 
@@ -146,7 +148,12 @@ public class Flux {
 	 * @return The HttpBuilder
 	 */
 	public static HttpBuilder request(String protocol, String host, Integer port, String path) {
-		return defaults(new FluentHttpClient().request(protocol, host, port, path));
+		return defaults(createClient().request(protocol, host, port, path));
+	}
+
+
+	protected static FluentHttpClient createClient() {
+		return new FluentHttpClient(Flux.clientFactory.get());
 	}
 
 
@@ -165,6 +172,16 @@ public class Flux {
 			builder.headers(defaultHeader);
 		}
 		return builder;
+	}
+
+
+	public static void setHttpClientFactory(Supplier<HttpClient> clientFactory) {
+		Flux.clientFactory = clientFactory;
+	}
+
+
+	public static void resetHttpClientFactory() {
+		setHttpClientFactory(CommonHttpClient::new);
 	}
 
 }

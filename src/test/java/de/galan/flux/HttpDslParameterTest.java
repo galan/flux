@@ -1,7 +1,6 @@
 package de.galan.flux;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,13 +30,13 @@ public class HttpDslParameterTest extends AbstractTestParent {
 	public void before() {
 		http = new FluentHttpClient();
 		builder = http.request("http://www.example.com");
-		assertNull(builder.builderParameter);
+		assertThat(builder.builderParameter).isNull();
 	}
 
 
 	private void assertParams(String key, String... items) {
-		assertNotNull(builder.builderParameter);
-		assertThat(builder.builderParameter, hasKey(key));
+		assertThat(builder.builderParameter).isNotNull();
+		assertThat(builder.builderParameter).containsKeys(key);
 		List<String> params = new ArrayList<>(builder.builderParameter.get(key));
 		for (String item: items) {
 			if (params.contains(item)) {
@@ -50,7 +49,7 @@ public class HttpDslParameterTest extends AbstractTestParent {
 		if (!params.isEmpty()) {
 			fail("Elements " + params + " not matched");
 		}
-		assertThat(builder.builderParameter.get(key).size(), equalTo(items.length));
+		assertThat(builder.builderParameter.get(key)).hasSize(items.length);
 		//assertThat(builder.builderParameter.get(key), hasItems(items));
 	}
 
@@ -109,8 +108,8 @@ public class HttpDslParameterTest extends AbstractTestParent {
 	@Test
 	public void paramsEmpty() throws Exception {
 		builder.parameter("a");
-		assertTrue(builder.builderParameter.containsKey("a"));
-		assertTrue(builder.builderParameter.get("a").isEmpty());
+		assertThat(builder.builderParameter).containsKey("a");
+		assertThat(builder.builderParameter.get("a")).isEmpty();
 	}
 
 }

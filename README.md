@@ -138,6 +138,6 @@ Actions that can be performed on the `Response` object:
 # Notes & Hints
 * You don't have to use the static `Flux` factory class, if you want to Inject the builder using a DI framework such as Guice, you can simply bind an instance of `FluentHttpClient`.
 * Flux is thread-safe
-* For testing it is useful to know that you can utilize the `MockCommonHttpClient`. You can pass the `MockCommonHttpClient` with canned Responses.
+* For testing it is useful to know that you can utilize the `MockCommonHttpClient`. You can pass the `MockCommonHttpClient` with canned Responses. Check the `MockTest` class for an example of the usage. 
 
   [1]: https://github.com/galan/maven-repository

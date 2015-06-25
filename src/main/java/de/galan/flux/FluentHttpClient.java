@@ -16,7 +16,7 @@ import java.util.concurrent.FutureTask;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.ObjectUtils;
 
-import de.galan.commons.time.HumanTime;
+import de.galan.commons.time.Durations;
 import de.galan.flux.proxy.CommonProxy;
 
 
@@ -134,7 +134,7 @@ public class FluentHttpClient {
 
 
 		public HttpBuilder timeout(String timeout) {
-			return timeout(HumanTime.dehumanizeTime(timeout));
+			return timeout(Durations.dehumanize(timeout));
 		}
 
 
@@ -150,7 +150,7 @@ public class FluentHttpClient {
 
 
 		public HttpBuilder timeoutConnection(String timeoutConnection) {
-			return timeoutConnection(HumanTime.dehumanizeTime(timeoutConnection));
+			return timeoutConnection(Durations.dehumanize(timeoutConnection));
 		}
 
 
@@ -166,7 +166,7 @@ public class FluentHttpClient {
 
 
 		public HttpBuilder timeoutRead(String timeoutRead) {
-			return timeoutRead(HumanTime.dehumanizeTime(timeoutRead));
+			return timeoutRead(Durations.dehumanize(timeoutRead));
 		}
 
 
