@@ -3,26 +3,30 @@
 
 	<groupId>de.galan</groupId>
 	<artifactId>flux</artifactId>
-	<version>0.7-SNAPSHOT</version>
+	<version>0.7.0-SNAPSHOT</version>
+
 	<name>Flux</name>
-	<description>Fluent http/rest-client interface</description>
+	<description>Fluent http/rest-client</description>
+	<url>https://github.com/galan/flux</url>
 
 	<parent>
 		<groupId>de.galan</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.8</version>
+		<version>0.9.0</version>
 	</parent>
 
 	<scm>
+		<connection>scm:git:ssh://github.com/galan/flux.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/galan/flux.git</developerConnection>
 		<url>https://github.com/galan/flux</url>
+		<tag>HEAD</tag>
 	</scm>
 
 	<dependencies>
 		<dependency>
 			<groupId>de.galan</groupId>
 			<artifactId>commons</artifactId>
-			<version>0.8</version>
+			<version>0.9.0</version>
 		</dependency>
 
 		<dependency>
