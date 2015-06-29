@@ -22,7 +22,7 @@ public class Flux {
 	private static Long defaultTimeoutConnection;
 	private static Long defaultTimeoutRead;
 	private static Map<String, String> defaultHeader;
-	private static Supplier<HttpClient> clientFactory;
+	private static Supplier<HttpClient> clientFactory = createDefaultHttpClientSupplier();
 
 
 	/**
@@ -181,7 +181,12 @@ public class Flux {
 
 
 	public static void resetHttpClientFactory() {
-		setHttpClientFactory(CommonHttpClient::new);
+		setHttpClientFactory(createDefaultHttpClientSupplier());
+	}
+
+
+	protected static Supplier<HttpClient> createDefaultHttpClientSupplier() {
+		return CommonHttpClient::new;
 	}
 
 }

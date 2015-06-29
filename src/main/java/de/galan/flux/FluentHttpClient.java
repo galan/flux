@@ -86,7 +86,7 @@ public class FluentHttpClient {
 		boolean builderTimeoutThread = false;
 		Map<String, String> builderHeader;
 		Map<String, List<String>> builderParameter;
-		private HttpClient builderClient;
+		HttpClient builderClient;
 
 
 		protected HttpBuilder(HttpClient client, String resource) {
