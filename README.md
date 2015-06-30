@@ -8,7 +8,13 @@ Efficient lightweight client-library for easy fluent http/rest requests in Java.
 * Configurable default timeouts and headers
 
 # Integration with Maven
-Use the [maven repository and artifact][1] on github.
+Just add the following dependency:
+
+    <dependency>
+    	<groupId>de.galan</groupId>
+    	<artifactId>flux</artifactId>
+    	<version>0.7.1</version>
+    </dependency>
 
 # Example usage
 ## Requests
