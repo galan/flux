@@ -17,7 +17,6 @@ Just add the following dependency:
     </dependency>
 
 # Example usage
-## Requests
 ### Creating Requests
 Simplest case
 
