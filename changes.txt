@@ -1,3 +1,6 @@
+0.7.1
+- Bugfix for providing the HttpClient
+
 0.7.0
 - releasing to central
 
