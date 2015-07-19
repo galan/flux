@@ -1,3 +1,7 @@
+[![Build Status](https://img.shields.io/travis/galan/flux.svg?style=flat)](https://travis-ci.org/galan/flux)
+[![Maven Central](https://img.shields.io/maven-central/v/de.galan/flux.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/de.galan/flux)
+[![License](https://img.shields.io/github/license/galan/flux.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0.html)
+
 Efficient lightweight client-library for easy fluent http/rest requests in Java.
 
 # Features
