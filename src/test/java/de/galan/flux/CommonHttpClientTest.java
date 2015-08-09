@@ -9,6 +9,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.simpleframework.http.Request;
 
+import de.galan.commons.logging.Say;
 import de.galan.commons.test.DummyContainer;
 import de.galan.commons.test.SimpleWebserverTestParent;
 
@@ -135,10 +136,32 @@ public class CommonHttpClientTest extends SimpleWebserverTestParent {
 			@Override
 			public void serve(Request req, org.simpleframework.http.Response resp) throws Exception {
 				PrintStream body = resp.getPrintStream();
-				body.print("world");
 				resp.setCode(200);
+				body.print("world");
 			}
 		}, delay);
+	}
+
+
+	@Test
+	public void bodyError() throws Exception {
+		startServer(new DummyContainer() {
+
+			@Override
+			public void serve(Request req, org.simpleframework.http.Response resp) throws Exception {
+				PrintStream body = resp.getPrintStream();
+				resp.setCode(404);
+				body.print("world");
+				Say.info(resp);
+			}
+
+		});
+
+		CommonHttpClient client = new CommonHttpClient();
+		try (Response response = client.request("http://localhost:12345")) {
+			assertEquals(404, response.getStatusCode());
+			assertEquals("world", response.getStreamAsString());
+		}
 	}
 
 }

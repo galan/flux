@@ -122,7 +122,8 @@ public class CommonHttpClient implements HttpClient {
 			}
 
 			try {
-				is = connection.getInputStream();
+				// http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4513568
+				is = (connection.getResponseCode() >= 400) ? connection.getErrorStream() : connection.getInputStream();
 			}
 			catch (Exception ex) {
 				// check response-statusCode instead
