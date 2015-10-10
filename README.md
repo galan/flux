@@ -49,6 +49,18 @@ The following methods are available:
 * `trace()`
 * `options()`
 * `method(Method method)`
+
+Additional each method is available as asynchronous call when postfixed with `Async`. Those methods will return a `Future<Response>`:
+
+* `getAsync()`
+* `putAsync()`
+* `postAsync()`
+* `deleteAsync()`
+* `headAsync()`
+* `traceAsync()`
+* `optionsAsync()`
+* `methodAsync(Method method)`
+
     
 ### Query parameters
 You can add parameters by calling the fluent `parameter`methods, adding multiple parameter with the same name is possible.
