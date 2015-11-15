@@ -1,6 +1,9 @@
 package de.galan.flux;
 
+import static java.util.stream.Collectors.*;
+
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -8,8 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
+
 import com.google.common.base.Charsets;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 
 
 /**
@@ -19,7 +25,7 @@ import com.google.common.collect.Iterators;
  */
 public class MockCommonHttpClient implements HttpClient {
 
-	private Iterator<Response> responses;
+	private Iterator<MockResponse> responses;
 	private List<Request> requests = new ArrayList<Request>();
 
 
@@ -28,28 +34,33 @@ public class MockCommonHttpClient implements HttpClient {
 	}
 
 
-	public MockCommonHttpClient(Response response) {
+	public MockCommonHttpClient(MockResponse response) {
 		setResponse(response);
 	}
 
 
-	public void setResponse(Response response) {
+	public void setResponse(MockResponse response) {
 		setResponses(true, response);
 	}
 
 
-	public MockCommonHttpClient response(Response response) {
+	public MockCommonHttpClient response(MockResponse response) {
 		setResponse(response);
 		return this;
 	}
 
 
-	public void setResponses(boolean repeat, Response... response) {
-		responses = repeat ? Iterators.cycle(response) : Iterators.forArray(response);
+	public void setResponses(boolean repeat, MockResponse... response) {
+		responses = repeat ? Iterators.cycle(createRewindableResponses(response)) : Iterators.forArray(response);
 	}
 
 
-	public MockCommonHttpClient responses(boolean repeat, Response... response) {
+	private Iterable<MockResponse> createRewindableResponses(MockResponse... response) {
+		return Lists.newArrayList(response).stream().map(MockResponse::convertToReplayableStream).collect(toList());
+	}
+
+
+	public MockCommonHttpClient responses(boolean repeat, MockResponse... response) {
 		setResponses(repeat, response);
 		return this;
 	}
@@ -90,7 +101,6 @@ public class MockCommonHttpClient implements HttpClient {
 
 
 		public Request(Method method, Map<String, String> extraHeader, byte[] body, String resource) {
-			super();
 			this.method = method;
 			this.extraHeader = extraHeader;
 			this.body = body;
@@ -107,23 +117,82 @@ public class MockCommonHttpClient implements HttpClient {
 	/** Mocks the body and metadata of a http response. */
 	public static class MockResponse extends Response {
 
+		// We store the stream independently, in order to be able to override the getStream() method and create a replayable stream
+		// that will be used when the responses(true,...) method is used to create infinite result stream, to be able to reset the stream.
+		private InputStream mockStream;
+
+
 		public MockResponse(String body, int statusCode) {
 			this(body, statusCode, "text/html;charset=UTF-8");
 		}
 
 
 		public MockResponse(byte[] body, int statusCode, String contentType) {
-			super(null, new ByteArrayInputStream(body), statusCode, null, contentType, null);
+			this(null, new ByteArrayInputStream(body), statusCode, null, contentType, null);
 		}
 
 
 		public MockResponse(String body, int statusCode, String contentType) {
-			super(null, new ByteArrayInputStream(body.getBytes(Charsets.UTF_8)), statusCode, Charsets.UTF_8.toString(), contentType, null);
+			this(null, new ByteArrayInputStream(body.getBytes(Charsets.UTF_8)), statusCode, Charsets.UTF_8.toString(), contentType, null);
 		}
 
 
 		public MockResponse(HttpURLConnection connection, InputStream dataStream, int statusCode, String contentEncoding, String contentType, Map<String, String> headerFields) {
-			super(connection, dataStream, statusCode, contentEncoding, contentType, headerFields);
+			super(connection, null, statusCode, contentEncoding, contentType, headerFields);
+			mockStream = dataStream;
+		}
+
+
+		@Override
+		public InputStream getStream() {
+			return mockStream;
+		}
+
+
+		MockResponse convertToReplayableStream() {
+			mockStream = new ReplayableInputStream(getStream());
+			return this;
+		}
+
+	}
+
+	/**
+	 * Repeats it's stream after it has been closed. Since it caches the whole InputStream, it should be used only for
+	 * testing with small or medium-size data streams.
+	 */
+	static class ReplayableInputStream extends InputStream {
+
+		private InputStream current;
+		private ByteArrayOutputStream output;
+
+
+		public ReplayableInputStream(InputStream input) {
+			try {
+				output = new ByteArrayOutputStream();
+				output.write(input);
+				reset();
+			}
+			catch (IOException ex) {
+				throw new RuntimeException("Unable to read inputstream", ex);
+			}
+		}
+
+
+		@Override
+		public void close() throws IOException {
+			reset();
+		}
+
+
+		@Override
+		public synchronized void reset() throws IOException {
+			current = new ByteArrayInputStream(output.toByteArray());
+		}
+
+
+		@Override
+		public int read() throws IOException {
+			return current.read();
 		}
 
 	}

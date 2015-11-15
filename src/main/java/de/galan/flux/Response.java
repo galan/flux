@@ -72,7 +72,9 @@ public class Response implements AutoCloseable {
 	}
 
 
-	/** Converts the inputstream to a string with the given encoding. Subsequent the inputstream will be empty/closed. */
+	/**
+	 * Converts the inputstream to a string with the given encoding. Subsequent the inputstream will be empty/closed.
+	 */
 	public String getStreamAsString(String encoding) throws IOException {
 		String result = null;
 		try {
