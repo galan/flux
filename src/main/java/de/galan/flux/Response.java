@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -69,6 +70,14 @@ public class Response implements AutoCloseable {
 	/** Converts the inputstream to a string in UTF-8. Subsequent the inputstream will be empty/closed. */
 	public String getStreamAsString() throws IOException {
 		return getStreamAsString("UTF-8");
+	}
+
+
+	/**
+	 * Converts the inputstream to a string with the given encoding. Subsequent the inputstream will be empty/closed.
+	 */
+	public String getStreamAsString(Charset charset) throws IOException {
+		return getStreamAsString(charset.toString());
 	}
 
 
