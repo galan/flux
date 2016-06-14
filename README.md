@@ -1,8 +1,8 @@
-[![Build Status](https://img.shields.io/travis/galan/commons.svg?style=flat)](https://travis-ci.org/galan/commons)
-[![Maven Central](https://img.shields.io/maven-central/v/de.galan/commons.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/de.galan/commons)
-[![License](https://img.shields.io/github/license/galan/commons.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0.html)
-
 Efficient lightweight client-library for easy fluent http/rest requests in Java.
+
+> :bulb: This project has been integrated into [de.galan:commons](https://github.com/galan/commons). For now the project-page acts as landing-page, but will refer to the new location.
+> 
+> To migrate simply change the dependency to `de.galan:commons` and update the package from `de.galan.flux` to `de.galan.commons.net.flux`.
 
 # Features
 * HTTP methods GET, PUT, POST, DELETE, HEAD, TRACE and OPTIONS
@@ -10,10 +10,6 @@ Efficient lightweight client-library for easy fluent http/rest requests in Java.
 * Proxy support (with authentication)
 * Configurable retries
 * Configurable default timeouts and headers
-
-> :bulb: This project has been integrated into [de.galan:commons](https://github.com/galan/commons). For now the project-page acts as landing-page, but will refer to the new location.
-> 
-> To migrate simply change the dependency to `de.galan:commons` and update the package from `de.galan.flux` to `de.galan.commons.net.flux`.
 
 # Integration with Maven
 Just add the following dependency (see [releases](https://github.com/galan/commons/releases) for latest version):
